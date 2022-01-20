@@ -1,0 +1,19 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Rutas y formularios
+    body
+
+    <center>
+        h1 Solución
+  
+        form(action="terminado", method="POST" style="background-color:lightblue;")
+         -for (var i = 0; i < 11; i++)
+            !=numero +"x"+ i +"= "
+            input(id='0',name='0',type='number',value=sol[i],placeholder='' style="background-color:lightgreen;")
+            br
+            br
+
+         <input type="submit" name="volver" value="Volver" style="color:blue;height:60;width:100px;">
+        

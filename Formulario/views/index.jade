@@ -1,0 +1,66 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Rutas y formularios
+    body
+        <center>
+        h1 Registro
+        
+
+        form(action="validar", method="POST" style="background-color:purple;")
+         label(for='Email') Email
+         br
+         input(id='email',name='email',type='email',value='',placeholder='Inserta tu email')
+         br
+         label(for='Nombre') Nombre
+         br
+         input(id='nombre',name='nombre',type='text',value='',placeholder='Inserta tu nombre')
+         br
+         label(for='password') Contraseña:
+         br
+         input(id='password',type='password',value='',placeholder='Inserta tu contraseña')
+         br
+         label(for='edad') Edad:
+         br
+         input(id='edad',type='number',value='',placeholder='Inserta tu edad')
+         br
+         br
+         label(for='genero') Genero:
+         br
+         input(type="radio", name="genero", value="hombre", checked=gender=="Hombre")
+         | Hombre
+         input(type="radio", name="genero", value="mujer", checked=gender=="Mujer")
+         | Mujer
+         br
+         br
+         label(for='videojuego') Genero de videojuego favorito:
+         br
+         label(for='misterio') Misterio:
+         <input type="checkbox" name='generoVideojuego' value='misterio'/>
+         label(for='accion') Accion:
+         <input type="checkbox" name='generoVideojuego' value='accion'/>
+         label(for='simulacion') Simulacion:
+         <input type="checkbox" name='generoVideojuego' value='simulacion'/>
+         label(for='miedo') Miedo:
+         <input type="checkbox" name='generoVideojuego' value='miedo'/>
+         br
+         br
+         label(for='pais') Pais:
+         br
+         <select name="paises">
+         <option value="España">España</option> 
+         <option value="Dinamarca">Dinamarca</option> 
+         <option value="Estados Unidos">Estados Unidos</option>
+         <option value="Francia">Francia</option>
+         <option value="Japon">Japon</option>
+         </select>
+         br
+         br
+         label(for='foto') Subir Foto:
+         br
+         <input type="file" name="file">
+         br
+         br
+         <input type="submit" name="enviar" value="Enviar" style="color:blue;height:60;width:100px;">
+

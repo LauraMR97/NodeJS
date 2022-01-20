@@ -1,0 +1,32 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Rutas y formularios
+    body
+        <center>
+        h1 Calculadora
+        
+
+        form(action="calculo", method="POST" style="background-color:pink;")
+         label(for='numero') Número 1
+         br
+         input(id='numero',name='numero1',type='number',value='',placeholder='Inserta un número')
+         br
+         label(for='numero') Número 2
+         br
+         input(id='numero',name='numero2',type='number',value='',placeholder='Inserta otro número')
+         br
+         label(for='operacion') Tipo de operación:
+         br
+         <select name="tipoOperacion">
+         <option value="suma">Suma</option> 
+         <option value="resta">Resta</option> 
+         <option value="division">División</option>
+         <option value="multiplicacion">Multiplicación</option>
+         </select>
+         br
+         br
+         br
+         <input type="submit" name="calcular" value="Calcular" style="color:red;height:60;width:100px;">
+

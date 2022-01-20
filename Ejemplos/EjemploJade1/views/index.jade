@@ -1,0 +1,44 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Página con express
+    body
+        h1!= nombre
+
+        //Ejecutar código JS
+        - var vector = [1,2,3,4];
+        - for (var i = 0; i < vector.length; i++)
+            //p!= vector[i]  
+            //Cuidado con la identación, si no estuviera dentro del bucle no se imprimiría nada.
+
+            //Para ver la diferencia entre usar:    =  !=   #
+            p!= "<h1>" + vector[i] + "</h1>"
+            p= "<h1>" + vector[i] + "</h1>"
+
+            p Hola  #{vector[i]}
+            //Lo que va entre las llaves se ejecuta como JS.
+
+            //Interpolación de etiquetas.
+            p.
+             Hola haz click en #[a(href="https://cifpvirgendegracia.com/") este link] por favor.
+
+        - if (2 > 3)
+            p.
+             Probando el if.
+        - else 
+            p.
+              El else
+             
+            //Probando el each
+        - each item in vector
+            p= item
+
+        - each item in vector
+            case item
+                when 1
+                    p El item era 1
+                when 2
+                    p El item era 2
+                default
+                    p Ni 1 ni 2

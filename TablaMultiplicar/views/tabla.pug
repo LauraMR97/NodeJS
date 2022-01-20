@@ -1,0 +1,27 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Rutas y formularios
+    body
+        <center>
+                h1!= 'Tabla del '+ solucion
+                h3!= 'Te quedan: '+intentos+' intentos'
+                h3!= mensaje
+
+                form(action="comprobar", method="POST" style="background-color:lightblue;")
+                 -for (var i = 0; i < 11; i++)
+                  -if(resultados)
+                   !=solucion +"x"+ i +"= "
+                   input(id='0',name='resultados',type='number',value=resultados[i],placeholder='' style=colores[i])
+                   br
+                   br
+                  -else
+                   !=solucion +"x"+ i +"= "
+                   input(id='0',name='resultados',type='number',value='',placeholder='' style='')
+                   br
+                   br
+                 <input type="submit" name="meRindo" value="Me Rindo" style="color:blue;height:60;width:100px;">
+                 <input type="submit" name="enviar" value="Enviar" style="color:blue;height:60;width:100px;">
+                 <input type="submit" name="volver" value="Volver" style="color:blue;height:60;width:100px;">
+                 
