@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Datos del formulario
+    body
+        h1 Listado de datos
+        - if (estado)
+            - each dato in datos
+                p= "Nombre: " + dato.DNI + " Nombre: " + dato.Nombre + " Tfno: " + dato.Tfno
+                br
+        - else
+            p= "No se ha encontrado ningún registro"
+        a(href="/index") Volver
