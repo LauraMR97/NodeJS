@@ -1,0 +1,22 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Base de datos
+    body
+        <center>
+        h1 Login
+        
+
+        form(action="login", method="POST" style="background-color:lightgray;")
+         label(for='Email') Email
+         br
+         input(id='email',name='email',type='email',value='',placeholder='Inserta tu email')
+         br
+         br
+         label(for='password') Contraseña:
+         br
+         input(id='password',type='password',value='',placeholder='Inserta tu contraseña')
+         br
+         br
+         <input type="submit" name="enviar" value="Acceder" style="color:blue;height:60;width:100px;">
