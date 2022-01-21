@@ -8,7 +8,7 @@ html(lang="en")
         h1 Login
         
 
-        form(action="login", method="POST" style="background-color:lightgray;")
+        form(action="validar", method="POST" style="background-color:lightgray;")
          label(for='Email') Email
          br
          input(id='email',name='email',type='email',value='',placeholder='Inserta tu email')
@@ -16,7 +16,7 @@ html(lang="en")
          br
          label(for='password') Contraseña:
          br
-         input(id='password',type='password',value='',placeholder='Inserta tu contraseña')
+         input(id='password',name="password",type='password',value='',placeholder='Inserta tu contraseña')
          br
          br
          <input type="submit" name="enviar" value="Acceder" style="color:blue;height:60;width:100px;">

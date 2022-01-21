@@ -1,22 +1,25 @@
-var express = require("express");
-var body_parser = require('body-parser');
-var router = express.Router();
+var express = require('express');
+var bodyParser = require('body-parser');
+
+
 var app = express();
 
+// Importamos las rutas
+var nota_routes = require('./routes/rutas.js');
+
+// body-parser --> necesario para recuperar los datos de los formularios.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//Establecemos el motor de plantillas.
 app.set("view engine", "pug");
 
-app.use(body_parser.urlencoded({ extended: true }));
-app.use(body_parser.json());
-//Esto utiliza el middleware de body-parser.
+// Cargamos las rutas, el primer argumento indica un prefijo para la URL.
+// app.use('/api', nota_routes);
+app.use("/", nota_routes);
 
+module.exports = app; //Exportamos los métodos de esta clase.
 
-app.get("/", function(req, res) {
-    res.render("index");
-});
+console.log("Servidor arrancado en http://localhost:8090");
 
-app.post("/login", function(req, res) {
-    email = req.body.email;
-    password = req.body.password;
-    res.render("registrado", { datos: req.body });
-});
 app.listen(8090);
