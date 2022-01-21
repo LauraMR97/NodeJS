@@ -1,0 +1,26 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Base de datos
+    body
+        <center>
+        h1!= 'Hola Holita!! tu eres: '+ datos[0].nombre+', Bienvenid@!'
+        h3 Crud de Usuarios
+
+        each item in usuarios
+         form(action="gestionar", method="POST" style="background-color:lightgray;")
+             label(for='Nombre') Nombre:
+             input(id='nombre',name='nombre',type='text',value=item.nombre readonly)
+             label(for='Email') Email
+             input(id='email',name='email',type='email',value=item.email readonly)
+             label(for='password') Contraseña:
+             input(id='password',name="password",type='password',value=item.password readonly)
+             <input type="submit" name="editar" value="Edit">
+             <input type="submit" name="borrar" value="X">
+             br
+             br
+
+        form(action="otro", method="POST" style="background-color:lightblue;")
+         <input type="submit" name="add" value="+" style="color:blue;height:60;width:100px;">
+         <input type="submit" name="volver" value="Cerrar Sesion" style="color:blue;height:60;width:100px;">

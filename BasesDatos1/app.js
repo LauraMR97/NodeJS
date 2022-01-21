@@ -20,6 +20,14 @@ app.use("/", nota_routes);
 
 module.exports = app; //Exportamos los métodos de esta clase.
 
+var session = require('express-session');
+
+app.use(session({
+    secret: '123456789',
+    resave: false,
+    saveUninitialized: true
+}));
+
 console.log("Servidor arrancado en http://localhost:8090");
 
 app.listen(8090);

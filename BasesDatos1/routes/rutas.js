@@ -5,7 +5,8 @@ var api = express.Router();
 //************************** Rutas ****************************
 
 api.get('/', NotaController.indice);
-api.post('/validar', NotaController.validar)
-
-
+api.post('/gestionar', NotaController.gestionUsuarios);
+api.get('/otro', NotaController.otraGestion);
+api.post('/validar', NotaController.validar);
+api.get('/volver', NotaController.indice);
 module.exports = api;
