@@ -1,0 +1,29 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Base de datos
+    body
+        <center>
+         h1 Editar usuario 
+         form(action="edit", method="POST" style="background-color:lightgray;")
+             label(for='Nombre') Nombre:
+             br
+             input(id='nombre',name='nombre',type='text',value=datos[0].nombre,placeholder='Inserta tu nombre')
+             br
+             br
+             label(for='Email') Email:
+             br
+             input(id='email',name='email',type='email',value=datos[0].email,placeholder='Inserta tu email')
+             br
+             br
+             label(for='rol') Rol:
+             br
+             input(type="radio", name="rol", value="1", checked=rol=="Administrador")
+             | Administrador
+             input(type="radio", name="rol", value="2", checked=rol=="Usuario")
+             | Usuario
+             br
+             br
+             <input type="submit" name="ed" value="Editar" style="color:blue;height:60;width:100px;">
+             <input type="submit" name="volver" value="Volver" style="color:blue;height:60;width:100px;">

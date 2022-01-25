@@ -9,4 +9,6 @@ api.post('/gestionar', NotaController.gestionUsuarios);
 api.post('/otro', NotaController.otraGestion);
 api.post('/validar', NotaController.validar);
 api.post('/volver', NotaController.indice);
+api.post('/aniadir', NotaController.crearUsuario);
+api.post('/edit', NotaController.editarUsuario);
 module.exports = api;

@@ -4,6 +4,14 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
+var session = require('express-session');
+
+app.use(session({
+    secret: '123456789',
+    resave: false,
+    saveUninitialized: true
+}));
+
 // Importamos las rutas
 var nota_routes = require('./routes/rutas.js');
 
@@ -20,13 +28,6 @@ app.use("/", nota_routes);
 
 module.exports = app; //Exportamos los métodos de esta clase.
 
-var session = require('express-session');
-
-app.use(session({
-    secret: '123456789',
-    resave: false,
-    saveUninitialized: true
-}));
 
 console.log("Servidor arrancado en http://localhost:8090");
 

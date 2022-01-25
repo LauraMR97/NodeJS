@@ -69,37 +69,127 @@ function verUsuarios(datos, res) {
         if (resultado.length > 0) {
             res.render("admin", { datos: datos, usuarios: resultado, estado: true });
         } else {
-            console.log('Registro no encontrado');
+            console.log('Registros no encontrados');
             res.render('index', { datos: null, estado: false });
         }
     });
 }
 
 function gestionUsuarios(req, res) {
-
+    var datos = req.session.usuarioLogeado;
     if (req.body.borrar != undefined) {
-        /*pool.query('DELETE FROM personas WHERE email = ?', req.body.email, (error, result) => {
+        pool.query('DELETE FROM personas WHERE email = ?', req.body.email, (error, result) => {
             if (error) throw error;
-            if (resultado.length > 0) {
-                res.render("admin", { estado: true });
+            if (result) {
+                verUsuarios(datos, res);
             } else {
                 console.log('Registro no encontrado');
                 res.render('index', { datos: null, estado: false });
             }
-        });*/
+        });
+    }
 
-        res.render('admin');
+    if (req.body.editar != undefined) {
+        req.session.PersonaAnt = req.body;
+        pool.query('SELECT * FROM personas WHERE email = ?', req.body.email, (error, result) => {
+            if (error) throw error;
+            var resultado = result;
+            if (resultado.length > 0) {
+                // var rol = verRol(req.body.email);
+                // console.log(rol);
+                res.render('editar', { datos: resultado });
+            } else {
+                console.log('Registro no encontrado');
+                res.render('index', { datos: null, estado: false })
+            }
+        });
     }
 }
 
 
 function otraGestion(req, res) {
-    console.log(req.body);
     if (req.body.volver != undefined) {
         res.render('index');
     }
 
+    if (req.body.add != undefined) {
+        res.render('crear');
+    }
+
 }
+
+function crearUsuario(req, res) {
+    var datos = req.session.usuarioLogeado;
+    if (req.body.volver != undefined) {
+        verUsuarios(datos, res);
+    }
+
+    if (req.body.add != undefined) {
+        if (req.body.password == req.body.password2) {
+            pool.query('INSERT INTO personas (nombre,email,password) VALUES (?,?,?)', [req.body.nombre, req.body.email, req.body.password], (error, result) => {
+                if (error) throw error;
+                if (result) {
+                    insertarRol(req.body.email, req.body.rol, res, req);
+                } else {
+                    console.log('Registro no insertado');
+                    res.render('index', { datos: null, estado: false });
+                }
+            });
+        } else {
+            res.render('crear', { mensaje: 'Las contraseñas no son iguales' });
+        }
+    }
+}
+
+
+function insertarRol(email, rol, res, req) {
+    var datos = req.session.usuarioLogeado;
+    pool.query('INSERT INTO conjunto (email,id_rol) VALUES (?,?)', [email, rol], (error, result) => {
+        if (error) throw error;
+        if (result) {
+            verUsuarios(datos, res);
+        } else {
+            console.log('Registro no insertado');
+            res.render('index', { datos: null, estado: false });
+        }
+    });
+}
+
+
+function editarUsuario(req, res) {
+    var datos = req.session.usuarioLogeado;
+    if (req.body.volver != undefined) {
+        verUsuarios(datos, res);
+    }
+
+    if (req.body.ed != undefined) {
+        var personaAnt = req.session.PersonaAnt;
+        console.log(personaAnt);
+        pool.query('UPDATE personas SET nombre = ?, email = ? WHERE email = ?', [req.body.nombre, req.body.email, personaAnt.email], (error, result) => {
+            if (error) throw error;
+            if (result) {
+                verUsuarios(datos, res);
+            } else {
+                console.log('Registro no insertado');
+                res.render('index', { datos: null, estado: false });
+            }
+        });
+    }
+}
+
+/*function verRol(email) {
+    pool.query('SELECT id_rol FROM conjunto WHERE email = ?', email, (error, result) => {
+        if (error) throw error;
+        var resultado = result;
+        if (resultado.length > 0) {
+            var rol = resultado[0].id_rol;
+            return rol;
+        } else {
+            console.log('Registro no encontrado');
+            res.render('index', { datos: null, estado: false })
+        }
+    });
+}*/
 
 
 
@@ -109,5 +199,8 @@ module.exports = {
     verRol,
     verUsuarios,
     gestionUsuarios,
-    otraGestion
+    otraGestion,
+    crearUsuario,
+    editarUsuario,
+    //verRol
 };

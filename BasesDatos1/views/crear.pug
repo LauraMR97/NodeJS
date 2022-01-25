@@ -1,0 +1,41 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Base de datos
+    body
+        <center>
+        h1 Crear usuario 
+        h2!= mensaje
+
+        form(action="aniadir", method="POST" style="background-color:lightgray;")
+         label(for='Nombre') Nombre:
+         br
+         input(id='nombre',name='nombre',type='text',value='',placeholder='Inserta tu nombre')
+         br
+         br
+         label(for='Email') Email:
+         br
+         input(id='email',name='email',type='email',value='',placeholder='Inserta tu email')
+         br
+         br
+         label(for='password') Contraseña:
+         br
+         input(id='password',name="password",type='password',value='',placeholder='Inserta tu contraseña')
+         br
+         br
+         label(for='password2') Repite Contraseña:
+         br
+         input(id='password2',name="password2",type='password',value='',placeholder='Inserta tu contraseña de nuevo')
+         br
+         br
+         label(for='rol') Rol:
+         br
+         input(type="radio", name="rol", value="1", checked=rol=="Administrador")
+         | Administrador
+         input(type="radio", name="rol", value="2", checked=rol=="Usuario")
+         | Usuario
+         br
+         br
+         <input type="submit" name="add" value="Crear" style="color:blue;height:60;width:100px;">
+         <input type="submit" name="volver" value="Volver" style="color:blue;height:60;width:100px;">
