@@ -177,7 +177,7 @@ function editarUsuario(req, res) {
     }
 }
 
-/*function verRol(email) {
+/*function verRol(email,res) {
     pool.query('SELECT id_rol FROM conjunto WHERE email = ?', email, (error, result) => {
         if (error) throw error;
         var resultado = result;
