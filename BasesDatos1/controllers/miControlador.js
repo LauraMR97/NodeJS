@@ -10,13 +10,6 @@ var config = {
 };
 var app = express();
 var pool = mysql.createPool(config);
-var session = require('express-session');
-
-app.use(session({
-    secret: '123456789',
-    resave: false,
-    saveUninitialized: true
-}))
 
 module.exports = pool;
 exports.pool = pool;
@@ -32,8 +25,8 @@ function validar(req, res) {
     pool.query('SELECT * FROM personas WHERE email = ? and password = ?', [req.body.email, req.body.password], (error, result) => {
         if (error) throw error;
         //res.status(200).send(result);
-        var resultado = result;
-        //req.session.usuarioLogeado = result;
+        var resultado = req.body.email;
+        req.session.usuarioLogeado = result;
         if (resultado.length > 0) {
             verRol(req.body.email, res, result);
         } else {

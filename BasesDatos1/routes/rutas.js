@@ -6,7 +6,7 @@ var api = express.Router();
 
 api.get('/', NotaController.indice);
 api.post('/gestionar', NotaController.gestionUsuarios);
-api.get('/otro', NotaController.otraGestion);
+api.post('/otro', NotaController.otraGestion);
 api.post('/validar', NotaController.validar);
-api.get('/volver', NotaController.indice);
+api.post('/volver', NotaController.indice);
 module.exports = api;
