@@ -95,9 +95,17 @@ function gestionUsuarios(req, res) {
             if (error) throw error;
             var resultado = result;
             if (resultado.length > 0) {
-                // var rol = verRol(req.body.email);
-                // console.log(rol);
-                res.render('editar', { datos: resultado });
+                pool.query('SELECT id_rol FROM conjunto WHERE email = ?', req.body.email, (error, result) => {
+                    if (error) throw error;
+                    var resultado2 = result;
+                    if (resultado2.length > 0) {
+                        var rol = resultado2[0].id_rol;
+                        res.render('editar', { datos: resultado, rol: rol });
+                    } else {
+                        console.log('Registro no encontrado');
+                        res.render('index', { datos: null, estado: false })
+                    }
+                });
             } else {
                 console.log('Registro no encontrado');
                 res.render('index', { datos: null, estado: false })
@@ -164,11 +172,18 @@ function editarUsuario(req, res) {
 
     if (req.body.ed != undefined) {
         var personaAnt = req.session.PersonaAnt;
-        console.log(personaAnt);
         pool.query('UPDATE personas SET nombre = ?, email = ? WHERE email = ?', [req.body.nombre, req.body.email, personaAnt.email], (error, result) => {
             if (error) throw error;
             if (result) {
-                verUsuarios(datos, res);
+                pool.query('UPDATE conjunto SET id_rol = ? WHERE email = ?', [req.body.rol, req.body.email], (error, result) => {
+                    if (error) throw error;
+                    if (result) {
+                        verUsuarios(datos, res);
+                    } else {
+                        console.log('Registro no insertado');
+                        res.render('index', { datos: null, estado: false });
+                    }
+                });
             } else {
                 console.log('Registro no insertado');
                 res.render('index', { datos: null, estado: false });
@@ -176,21 +191,6 @@ function editarUsuario(req, res) {
         });
     }
 }
-
-/*function verRol(email,res) {
-    pool.query('SELECT id_rol FROM conjunto WHERE email = ?', email, (error, result) => {
-        if (error) throw error;
-        var resultado = result;
-        if (resultado.length > 0) {
-            var rol = resultado[0].id_rol;
-            return rol;
-        } else {
-            console.log('Registro no encontrado');
-            res.render('index', { datos: null, estado: false })
-        }
-    });
-}*/
-
 
 
 module.exports = {
@@ -202,5 +202,4 @@ module.exports = {
     otraGestion,
     crearUsuario,
     editarUsuario,
-    //verRol
 };
