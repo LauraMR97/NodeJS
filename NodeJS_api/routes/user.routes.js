@@ -1,7 +1,7 @@
 //Los middleware que se van a usar
-//const { authJwt } = require("../middleware");
+const { authJwt } = require("../middleware/authJwt");
 //El controlador que se va a usar
-//const controller = require("../controllers/user.controller");
+const controller = require("../controller/user.controller");
 
 //Esto va a requerir acceso por token de seguridad
 module.exports = function(app) {
@@ -12,9 +12,6 @@ module.exports = function(app) {
         );
         next();
     });
-
-    //ruta libre para todos
-    //app.get("/api/test/all", controller.allAccess);
 
 
     //metodo get
@@ -28,9 +25,10 @@ module.exports = function(app) {
         "/api/test/mod", [authJwt.verifyToken, authJwt.isModerator],
         controller.moderatorBoard
     );
+*/
 
-    app.get(
-        "/api/test/admin", [authJwt.verifyToken, authJwt.isAdmin],
+    app.post(
+        "/api/admin/crud", [authJwt.verifyToken, authJwt.isAdmin],
         controller.adminBoard
-    );*/
+    );
 }

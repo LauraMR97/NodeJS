@@ -1,9 +1,30 @@
-import '../config/db.config';
-//Aqui va la logica, el acceso a la base de datos y la devolucion de json
+//const db = require("../models");
+var express = require('express');
+var bodyParser = require('body-parser');
+const configuracion = require("../config/auth.config");
 
-exports.allAccess = (req, res) => {
-    res.status(200).send("Public Content.");
+var config = {
+    host: 'localhost',
+    user: 'LauraM',
+    password: 'Chubaca2021',
+    database: 'nodejs_bbdd',
+    port: 3306
 };
+
+var app = express();
+var mysql = require('mysql');
+var pool = mysql.createPool(config);
+
+// Export the pool
+module.exports = pool;
+exports.pool = pool;
+app.use(bodyParser.json());
+
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcryptjs");
+const { response } = require('express');
+
+////////////////////////////////////////FUNCIONES///////////////////////////////////
 
 exports.userBoard = (req, res) => {
     res.status(200).send("User Content.");

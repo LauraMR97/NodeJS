@@ -1,10 +1,7 @@
 const jwt = require("jsonwebtoken");
-const config = require("../config/auth.config.js");
-const db = require("../models");
-const User = db.user;
+const configuracion = require("../config/auth.config");
 
-
-verifyToken = (req, res, next) => {
+function verifyToken(req, res, next) {
     let token = req.headers["x-access-token"];
 
     //NO tienes token
@@ -15,7 +12,7 @@ verifyToken = (req, res, next) => {
     }
 
     //No estas autorizado
-    jwt.verify(token, config.secret, (err, decoded) => {
+    jwt.verify(token, configuracion.secret, (err, decoded) => {
         if (err) {
             return res.status(401).send({
                 message: "Unauthorized!"
@@ -25,12 +22,27 @@ verifyToken = (req, res, next) => {
         req.userId = decoded.id;
         next();
     });
+
 }
 
+
+function isAdmin(req, res, next) {
+    var rol = req.headers['roles'];
+
+    if (rol == 1) {
+        next();
+        return;
+    }
+
+    res.status(403).send({
+        message: "No eres Administrador!"
+    });
+    return;
+}
+
+
 const authJwt = {
-    verifyToken: verifyToken,
-    isAdmin: isAdmin,
-    isModerator: isModerator,
-    isModeratorOrAdmin: isModeratorOrAdmin
+    verifyToken,
+    isAdmin
 };
 module.exports = authJwt;
