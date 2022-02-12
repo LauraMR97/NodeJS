@@ -1,5 +1,5 @@
 //Los middleware que se van a usar
-const { authJwt } = require("../middleware/authJwt");
+//const { authJwt } = require("../middleware/authJwt");
 //El controlador que se va a usar
 const controller = require("../controller/user.controller");
 
@@ -15,20 +15,37 @@ module.exports = function(app) {
 
 
     //metodo get
-    /*app.get(
+    app.post(
         "/api/test/user", // ruta
-        [authJwt.verifyToken], //midleware que va a pasar
+        //midleware que va a pasar
         controller.userBoard //controlador  y funcion que se va a utilizar
     );
 
-    app.get(
-        "/api/test/mod", [authJwt.verifyToken, authJwt.isModerator],
-        controller.moderatorBoard
+    app.post(
+        "/api/admin/crud",
+        controller.verUsuarios
     );
-*/
 
     app.post(
-        "/api/admin/crud", [authJwt.verifyToken, authJwt.isAdmin],
-        controller.adminBoard
+        "/api/admin/editar",
+        controller.editarUsuario
+    );
+
+
+    app.post(
+        "/api/admin/borrar",
+        controller.borrarUsuario
+    );
+
+    app.post(
+        "/api/admin/verUsuario",
+        controller.verUsuario
+    );
+
+
+
+    app.post(
+        "/api/admin/add",
+        controller.crearUsuario
     );
 }

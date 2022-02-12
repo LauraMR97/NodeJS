@@ -42,7 +42,7 @@ function isAdmin(req, res, next) {
 
 
 const authJwt = {
-    verifyToken,
-    isAdmin
+    verifyToken: verifyToken,
+    isAdmin: isAdmin,
 };
 module.exports = authJwt;
