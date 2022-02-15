@@ -29,6 +29,7 @@ const { response } = require('express');
 
 ////////////////////////////////////////LOGIN///////////////////////////////////////////
 function login(req, res) {
+    console.log(req.body);
     pool.query('SELECT * FROM personas WHERE email = ? and password = ?', [req.body.email, req.body.password], (error, result) => {
         if (error) throw error;
         //res.status(200).send(result);
@@ -45,7 +46,6 @@ function login(req, res) {
 
 function verRol(req, res, datos) {
     var passwordIsValid = false;
-
     pool.query('SELECT * FROM conjunto WHERE email = ?', req.body.email, (error, result) => {
         if (error) throw error;
         //res.status(200).send(result);
@@ -80,11 +80,28 @@ function verRol(req, res, datos) {
                 });
 
             } else {
+
+                if (req.body.password == datos[0].password) {
+                    passwordIsValid = true;
+                }
+
+                if (!passwordIsValid) {
+                    return res.status(401).send({
+                        accessToken: null,
+                        message: "Invalid Password!"
+                    });
+                }
+
+                var token = jwt.sign({ email: req.body.email }, configuracion.secret, {
+                    expiresIn: 86400 // 24 hours
+                });
+
                 res.status(200).send({
                     message: "Usuario",
                     nombre: datos[0].nombre,
                     email: req.body.email,
                     roles: resultado[0].id_rol,
+                    accessToken: token
                 });
             }
         } else {

@@ -32,6 +32,7 @@ function userBoard(req, res) {
 
 function verUsuarios(req, res) {
     pool.query('SELECT * FROM personas', (error, result) => {
+        console.log(result);
         if (error) throw error;
         //res.status(200).send(result);
         var resultado = result;
@@ -46,8 +47,8 @@ function verUsuarios(req, res) {
 }
 
 function crearUsuario(req, res) {
-    if (req.body.password == req.body.password2) {
-        pool.query('INSERT INTO personas (nombre,email,password) VALUES (?,?,?)', [req.body.nombre, req.body.email, req.body.password], (error, result) => {
+    if (req.body.password1 == req.body.password2) {
+        pool.query('INSERT INTO personas (nombre,email,password) VALUES (?,?,?)', [req.body.nombre, req.body.email, req.body.password1], (error, result) => {
             if (error) throw error;
             if (result) {
                 insertarRol(req.body.email, req.body.rol, res, req);
@@ -55,7 +56,7 @@ function crearUsuario(req, res) {
                 res.status(400).send({ message: "Registro no insertado" });
             }
         });
-
+    } else {
         res.status(400).send({ message: "Constraseñas distintas" });
     }
 
@@ -96,9 +97,15 @@ function verUsuario(req, res) {
                 var resultado2 = result;
                 if (resultado2.length > 0) {
                     var rol = resultado2[0].id_rol;
-                    res.status(200).send({
-                        persona: resultado,
+                    var persona = {
+                        nombre: resultado[0].nombre,
+                        correo: resultado[0].email,
+                        password1: resultado[0].password,
+                        password2: resultado[0].password,
                         rol: rol
+                    }
+                    res.status(200).send({
+                        persona: persona
                     });
                 } else {
                     res.status(400).send({ message: "Fallo al encontrar el rol" });
@@ -113,13 +120,13 @@ function verUsuario(req, res) {
 
 //REVISAR//
 function editarUsuario(req, res) {
-    pool.query('UPDATE personas SET nombre = ?, email = ? WHERE email = ?', [req.body.nombre, req.body.email, personaAnt.email], (error, result) => {
+    pool.query('UPDATE personas SET nombre = ?, email = ?,password = ? WHERE email = ?', [req.body.nombre, req.body.email, req.body.password, req.body.personaAnt], (error, result) => {
         if (error) throw error;
         if (result) {
             pool.query('UPDATE conjunto SET id_rol = ? WHERE email = ?', [req.body.rol, req.body.email], (error, result) => {
                 if (error) throw error;
                 if (result) {
-                    verUsuarios(datos, res);
+                    res.status(200).send({ message: "Usuario editado" });
                 } else {
                     res.status(400).send({ message: "Fallo al editar  rol" });
                 }

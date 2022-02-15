@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const configuracion = require("../config/auth.config");
 
+
 function verifyToken(req, res, next) {
     let token = req.headers["x-access-token"];
 
@@ -25,7 +26,6 @@ function verifyToken(req, res, next) {
 
 }
 
-
 function isAdmin(req, res, next) {
     var rol = req.headers['roles'];
 
@@ -41,8 +41,7 @@ function isAdmin(req, res, next) {
 }
 
 
-const authJwt = {
-    verifyToken: verifyToken,
-    isAdmin: isAdmin,
+module.exports = {
+    verifyToken,
+    isAdmin,
 };
-module.exports = authJwt;
