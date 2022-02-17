@@ -20,7 +20,7 @@ function indice(req, res) {
 
 function validar(req, res) {
     //usuarios.find({ id: req.body.id },
-        usuarios.find( //--> Esto equivale a un SELECT *
+    usuarios.find( //--> Esto equivale a un SELECT *
         function(err, personas) {
             if (err) throw err;
             if (personas.length > 0) {

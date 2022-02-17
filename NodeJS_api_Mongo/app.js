@@ -17,13 +17,13 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
+
+// body-parser --> necesario para recuperar los datos de los formularios.
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
+var mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/nodejs_bbdd");
 //const db = require("./models");
 //const Role = db.role;
 
@@ -33,13 +33,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 });*/
 
 
-
 // simple route
 app.get("/", (req, res) => {
     res.json({ message: "Bienvenido." });
 });
 
-// routes
+// Importamos las rutas
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
 
