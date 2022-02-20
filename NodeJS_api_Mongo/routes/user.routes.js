@@ -32,13 +32,13 @@ module.exports = function(app) {
     );
 
 
-    app.post(
-        "/api/admin/borrar", [authJwt.verifyToken, authJwt.isAdmin],
+    app.delete(
+        "/api/admin/borrar/:email", [authJwt.verifyToken, authJwt.isAdmin],
         controller.borrarUsuario
     );
 
-    app.post(
-        "/api/admin/verUsuario", [authJwt.verifyToken, authJwt.isAdmin],
+    app.get(
+        "/api/admin/verUsuario/:email", [authJwt.verifyToken, authJwt.isAdmin],
         controller.verUsuario
     );
 

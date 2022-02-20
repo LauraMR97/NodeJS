@@ -77,13 +77,22 @@ function insertarRol(email, rol, res, req) {
 
 
 function borrarUsuario(req, res) {
-    persona.deleteOne({ email: req.body.email, },
+    persona.deleteOne({ email: req.params.email, },
         function(err, personas) {
             if (err) throw err;
             if (err) {
                 res.status(400).send({ message: "Fallo al borrar usuario" });
             } else {
-                res.status(200).send({ message: "Usuario borrado" });
+                conjunto.deleteOne({ email: req.params.email, },
+                    function(err, personas) {
+                        if (err) throw err;
+                        if (err) {
+                            res.status(400).send({ message: "Fallo al borrar el rol" });
+                        } else {
+                            res.status(200).send({ message: "Usuario borrado" });
+                        }
+                    }
+                );
             }
         }
     );
@@ -91,14 +100,14 @@ function borrarUsuario(req, res) {
 
 function verUsuario(req, res) {
     persona.find({
-            email: req.body.email
+            email: req.params.email
         },
         function(err, personas) {
             console.log(personas);
             if (err) throw err;
             if (personas.length > 0) {
                 conjunto.find({
-                        email: req.body.email
+                        email: req.params.email
                     },
                     function(err, resultado) {
                         console.log(resultado);
@@ -134,8 +143,8 @@ function editarUsuario(req, res) {
     var valoresPersonaNuevos = { $set: { nombre: req.body.nombre, email: req.body.email, password: req.body.password } };
 
 
-    var valoresConjuntoNuevos = { $set: { id_rol: req.body.rol } };
-    var emailAux = { email: req.body.email };
+    var valoresConjuntoNuevos = { $set: { id_rol: req.body.rol, email: req.body.email } };
+    var emailAux = { email: req.body.personaAnt };
 
 
     persona.updateOne(

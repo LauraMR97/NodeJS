@@ -5,6 +5,7 @@ var userSchema = new mongoose.Schema({
     email: { type: String, unique: true },
     nombre: { type: String },
     password: { type: String }
+
 }, { collection: 'nodejs_bbdd.personas' });
 
 
